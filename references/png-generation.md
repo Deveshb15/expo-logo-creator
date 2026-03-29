@@ -6,6 +6,7 @@ Generate PNG icon files from SVG sources using `@resvg/resvg-js`.
 
 - Rust-based SVG renderer with full filter support (blur, drop-shadow, masks)
 - Handles `<text>` elements with system fonts via `loadSystemFonts: true`
+- Can load repo-bundled custom fonts when their file paths are passed through `fontFiles`
 - Produces clean, high-quality PNG output
 - No browser/DOM required
 
@@ -23,10 +24,16 @@ Create `generate-icons.mjs` in the project root:
 
 ```javascript
 import { Resvg } from '@resvg/resvg-js';
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
 // Ensure output directory exists
 mkdirSync('assets/images', { recursive: true });
+
+// Optional: include repo font files when the icon uses a bundled custom font.
+// Remove entries that do not exist in the target repo.
+const fontFiles = [
+  'assets/fonts/YourBrand-Bold.ttf',
+].filter((file) => existsSync(file));
 
 const configs = [
   { svg: 'assets/svg/icon-full.svg',        png: 'assets/images/icon.png',                        size: 1024 },
@@ -41,7 +48,10 @@ for (const { svg, png, size } of configs) {
   const svgData = readFileSync(svg, 'utf-8');
   const resvg = new Resvg(svgData, {
     fitTo: { mode: 'width', value: size },
-    font: { loadSystemFonts: true },
+    font: {
+      loadSystemFonts: true,
+      fontFiles,
+    },
   });
   const rendered = resvg.render();
   writeFileSync(png, rendered.asPng());
@@ -117,10 +127,25 @@ for (const [svg, png, size] of configs) {
 ```
 
 This avoids creating a temporary file but is harder to debug if something fails.
+Prefer the file-based script when custom repo fonts need to be passed through `fontFiles`.
+
+## Using repo fonts correctly
+
+If the SVG uses a custom app font:
+
+1. Find the actual font file in the repo, such as `assets/fonts/BrandDisplay-Semibold.ttf`
+2. Add that path to `fontFiles`
+3. Keep the SVG `font-family` set to the same family name used by the app, followed by safe fallbacks
+
+If you cannot locate the font file, either:
+
+- switch the icon to the safe fallback chain, or
+- convert the text to SVG paths when exact brand lettering is required
 
 ## Troubleshooting
 
 - **Text renders as empty boxes**: Ensure `font: { loadSystemFonts: true }` is set in Resvg options
+- **Custom app font does not appear**: Pass the corresponding file path in `font.fontFiles` and confirm the SVG `font-family` matches the intended family name
 - **Filters not rendering**: Make sure you're using SVG `<filter>` elements, not CSS filters
 - **Transparent areas appear black**: The PNG format supports transparency -- verify your viewer supports it
 - **Monochrome icon is too large**: It should be small (~5-30KB) since it's just white shapes, no gradients

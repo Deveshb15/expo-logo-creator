@@ -207,7 +207,8 @@ Create 3 stars at different sizes for depth:
 
 ```xml
 <g fill="white" text-anchor="middle"
-   font-family="Avenir Next, Avenir, Futura, Helvetica Neue, sans-serif" font-weight="700">
+   font-family="APP_FONT_FAMILY, Avenir Next, Avenir, Futura, Helvetica Neue, sans-serif"
+   font-weight="700">
   <text x="257" y="306" dy="0.35em" font-size="62" opacity="0.9"
         transform="rotate(-12, 257, 306)">z</text>
   <text x="201" y="226" dy="0.35em" font-size="48" opacity="0.68"
@@ -217,9 +218,11 @@ Create 3 stars at different sizes for depth:
 </g>
 ```
 
+- Use this only when `text.allowed = true` under `references/typography-rules.md`
 - Each z gets progressively smaller, more transparent, and less rotated
 - `transform="rotate(angle, cx, cy)"` rotates around the text's own center
-- Font fallback chain ensures rendering across platforms
+- Replace `APP_FONT_FAMILY` with the discovered repo font when available
+- If the font is bundled with the app, pass the font file to Resvg during PNG generation
 - `dy="0.35em"` vertically centers the text
 
 ## Scaling Formula
@@ -251,3 +254,4 @@ Apply this to EVERY absolute coordinate in the SVG when resizing. The gradient c
 8. **The foreground SVG must NOT have a background fill** -- it must be fully transparent
 9. **The monochrome SVG uses ONLY `fill="white"`** -- no gradients, no filters, no opacity variations
 10. **Font rendering in resvg requires `loadSystemFonts: true`** -- without it, text elements render as empty rectangles
+11. **Repo-only custom fonts must also be supplied as `font.fontFiles`** -- otherwise Resvg falls back or fails to match the intended typeface

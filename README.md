@@ -1,16 +1,17 @@
 # expo-logo-creator
 
-A Claude Code skill that generates beautiful, illustrated SVG app icons for Expo and React Native projects.
+A Claude Code skill for generating illustrated Expo and React Native app icons that stay aligned with the target app's brand colors, typography, and platform constraints.
 
 ## What it does
 
 When you ask Claude to create a logo for your Expo app, this skill:
 
-1. **Reads your codebase** to understand your app's purpose, brand colors, and theme
-2. **Designs a unique illustrated icon** with motifs tailored to your app category (not a generic template)
-3. **Creates 4 SVG source files** with gradients, masks, shadows, and cute illustrations
-4. **Generates 6 PNG files** for all platforms (iOS, Android adaptive, monochrome, splash, favicon)
-5. **Updates app.json** with the correct icon paths
+1. Reads your codebase to understand the app's purpose, theme tokens, and fonts
+2. Builds an internal `IconTheme` so background, motif, glow, shadow, and detail colors all come from one coherent palette
+3. Reuses app fonts when text is actually warranted and renderable
+4. Creates 4 SVG source files for iOS, Android adaptive, and monochrome icons
+5. Generates 6 PNG files for iOS, Android, splash, and web
+6. Updates Expo icon config paths
 
 ## Installation
 
@@ -22,42 +23,50 @@ npx skills add Deveshb15/expo-logo-creator
 
 Open your Expo project in Claude Code and ask:
 
-```
+```text
 Create a logo for my app
 ```
 
-Claude will analyze your project, choose appropriate motifs and colors, and generate a complete icon set.
+The skill will inspect the repo first, derive a theme from your existing brand colors, check which fonts are actually available, and then generate a complete icon set.
 
 ### Refinement
 
-After the initial generation, you can ask for adjustments:
+After the initial generation, you can ask for adjustments such as:
 
 - "Make the icon bigger"
-- "Change the color to blue"
-- "The face details aren't visible enough"
-- "Add more sparkle effects"
+- "Use our teal palette instead of the blue one"
+- "Remove the text and keep it purely symbolic"
+- "The details disappear at small sizes"
 
 ## What gets generated
 
-```
+```text
 assets/
-├── svg/                              # Editable vector source files
-│   ├── icon-full.svg                 # Complete icon (iOS)
-│   ├── icon-foreground.svg           # Android adaptive foreground
-│   ├── icon-background.svg           # Android adaptive background
-│   └── icon-monochrome.svg           # Android 13+ themed icon
-└── images/                           # Ready-to-use PNGs
-    ├── icon.png                      # 1024x1024 (iOS)
-    ├── android-icon-foreground.png   # 1024x1024
-    ├── android-icon-background.png   # 1024x1024
-    ├── android-icon-monochrome.png   # 1024x1024
-    ├── splash-icon.png              # 512x512
-    └── favicon.png                   # 48x48
+├── svg/
+│   ├── icon-full.svg
+│   ├── icon-foreground.svg
+│   ├── icon-background.svg
+│   └── icon-monochrome.svg
+└── images/
+    ├── icon.png
+    ├── android-icon-foreground.png
+    ├── android-icon-background.png
+    ├── android-icon-monochrome.png
+    ├── splash-icon.png
+    └── favicon.png
 ```
+
+## Design goals
+
+- Reuse the app's real color theme before falling back to curated palettes
+- Keep icons legible at favicon size
+- Avoid generic motifs that do not match the product
+- Keep Android monochrome icons clean and recognizable
+- Use decorative text only when the repo font and icon concept genuinely support it
 
 ## Supported app categories
 
-The skill includes motifs for: Sleep/Wellness, Fitness/Health, Finance, Social/Chat, Productivity, Food/Cooking, Music/Audio, Travel/Maps, Education, Photography, Weather, Shopping, Gaming, Meditation, and more.
+The skill includes motif guidance for sleep and wellness, fitness and health, finance, social and chat, productivity, food, music, travel, education, photography, weather, shopping, gaming, meditation, and generic branded initials or symbols.
 
 ## License
 

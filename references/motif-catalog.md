@@ -2,6 +2,8 @@
 
 Illustrated SVG elements organized by app category. Select 2-4 elements that match the app's purpose. **NEVER default to moon/cloud -- always match the specific app.**
 
+Textual motifs and labels are conditional. Use them only when `references/typography-rules.md` allows text and the selected font can actually be rendered.
+
 All motifs are designed for a 1024x1024 canvas centered at (512, 512). Scale and reposition as needed.
 
 ## Category Guide
@@ -129,7 +131,7 @@ Position: centered. The lens aperture creates visual interest. Pair with flash o
 <polygon points="512,650 525,490 512,470 499,490" fill="white" opacity="0.5"/>
 <circle cx="512" cy="490" r="15" fill="white"/>
 <!-- Cardinal marks -->
-<g fill="white" font-family="Avenir Next, Avenir, Futura, sans-serif" font-weight="700"
+<g fill="white" font-family="APP_FONT_FAMILY, Avenir Next, Avenir, Futura, sans-serif" font-weight="700"
    font-size="28" text-anchor="middle" opacity="0.7">
   <text x="512" y="348">N</text>
   <text x="512" y="652">S</text>
@@ -138,7 +140,7 @@ Position: centered. The lens aperture creates visual interest. Pair with flash o
 </g>
 ```
 
-Position: centered. Pair with location pin and clouds.
+Position: centered. Pair with location pin and clouds. If text is not allowed, replace the letters with simple cardinal ticks.
 
 ### Chef Hat
 
@@ -162,11 +164,11 @@ Position: slightly above center. Cloud-like puff construction. Pair with fork/sp
 <circle cx="512" cy="490" r="170" fill="none" stroke="white" stroke-width="6" opacity="0.25"/>
 <!-- Dollar sign or symbol -->
 <text x="512" y="490" dy="0.35em" text-anchor="middle"
-      font-family="Avenir Next, Avenir, Futura, sans-serif"
+      font-family="APP_FONT_FAMILY, Avenir Next, Avenir, Futura, sans-serif"
       font-size="180" font-weight="700" fill="white" opacity="0.85">$</text>
 ```
 
-Position: centered. Use a symbol relevant to the app. Pair with chart line or sparkles.
+Position: centered. Use a symbol relevant to the app only when the symbol is central to brand recognition. If exact typography is risky, convert the symbol to paths or drop it.
 
 ### Game Controller
 
