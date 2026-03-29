@@ -15,7 +15,7 @@ When you ask Claude to create a logo for your Expo app, this skill:
 ## Installation
 
 ```bash
-npx skills add deveshbhimanpelli/expo-logo-creator
+npx skills add Deveshb15/expo-logo-creator
 ```
 
 ## Usage

@@ -7,7 +7,7 @@ description: >
   a logo, icon, or app icon for their Expo or React Native app.
 license: MIT
 metadata:
-  author: deveshbhimanpelli
+  author: Deveshb15
   version: "1.0.0"
 ---
 
